@@ -219,14 +219,6 @@ h1 {
     box-shadow 160ms ease;
 }
 
-.email-button {
-  margin-top: 16px;
-}
-
-.email-button[hidden] {
-  display: none;
-}
-
 .button {
   margin-top: 3px;
   background: var(--rose);
@@ -234,6 +226,16 @@ h1 {
   color: #fff;
   cursor: pointer;
   font-weight: 700;
+}
+
+.button[hidden] {
+  display: none;
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
 }
 
 .button:hover {
@@ -258,6 +260,10 @@ h1 {
   color: var(--rose-dark);
   font-size: 0.95rem;
   line-height: 1.65;
+}
+
+.response.error {
+  color: #a23838;
 }
 
 .response:empty {
