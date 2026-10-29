@@ -84,13 +84,16 @@
             maxlength="120"
           />
         </div>
-        <button class="button" type="submit">See our date plan</button>
+        <button class="button" type="submit">Make my date plan</button>
       </form>
 
       <p class="response" id="response" role="status" aria-live="polite"></p>
-      <a class="button email-button" id="email-plan" href="#" hidden>
-        Email me this plan
+      <a class="button" id="text-plan" href="#" hidden>
+        Text this plan to me
       </a>
+      <p class="note text-note" id="text-note" hidden>
+        Your messaging app will open with the plan ready. Tap Send to share it.
+      </p>
       <a class="back-link" href="index.html">← Back to the question</a>
     </main>
     <script>
@@ -99,7 +102,8 @@
       const customIdeaChoice = document.querySelector("#custom-idea-choice");
       const customIdeaField = document.querySelector("#custom-idea-field");
       const customIdeaInput = document.querySelector("#custom-idea");
-      const emailPlan = document.querySelector("#email-plan");
+      const textPlan = document.querySelector("#text-plan");
+      const textNote = document.querySelector("#text-note");
 
       form.addEventListener("change", (event) => {
         if (event.target.name !== "idea") {
@@ -130,22 +134,21 @@
           ? formData.get("customIdea")
           : formData.get("idea");
         const place = formData.get("place");
-        const location = place ? ` at ${place}` : "";
         const time = formData.get("time");
-        response.textContent = `That sounds lovely! How about ${idea}${location} on ${date} at ${time}? Show me this idea and we can confirm the details together. ♡`;
-        const subject = "A date idea";
-        const body = [
-          "Hi! I said yes to a date. Here's what I had in mind:",
-          "",
+        const message = [
+          "Hi! I’d love to go on a date with you. Here’s my idea:",
           `Date idea: ${idea}`,
           `Day: ${date}`,
           `Time: ${time}`,
           `Place: ${place || "I'm open to suggestions"}`,
-          "",
           "Let me know what you think! ♡",
         ].join("\n");
-        emailPlan.href = `mailto:sadhana2004irl@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        emailPlan.hidden = false;
+
+        textPlan.href = `sms:0851706921?body=${encodeURIComponent(message)}`;
+        textPlan.hidden = false;
+        textNote.hidden = false;
+        response.textContent =
+          "That sounds lovely! Your date plan is ready to text. ♡";
       });
     </script>
   </body>
