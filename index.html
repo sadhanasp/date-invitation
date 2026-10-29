@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="theme-color"
+      content="#fff8f1"
+    />
+    <meta
+      name="description"
+      content="A little question for someone special."
+    />
+    <title>A little question for you</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #432b36;
+        --muted: #806b73;
+        --rose: #d86678;
+        --rose-dark: #b94d61;
+        --paper: #fffdf9;
+        --line: #f0e2db;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        overflow-x: hidden;
+        padding: 32px 20px;
+        background:
+          radial-gradient(ellipse at 12% 18%, #f9e6df 0, transparent 30%),
+          radial-gradient(ellipse at 88% 82%, #f8e9d8 0, transparent 32%),
+          #fff8f1;
+        color: var(--ink);
+        font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .invitation {
+        position: relative;
+        width: min(100%, 520px);
+        padding: 54px 48px 46px;
+        overflow: hidden;
+        border: 1px solid rgb(240 226 219 / 75%);
+        border-radius: 28px;
+        background: rgb(255 253 249 / 94%);
+        box-shadow: 0 24px 70px rgb(102 65 72 / 10%);
+        text-align: center;
+        animation: arrive 700ms ease-out both;
+      }
+
+      .invitation::before,
+      .invitation::after {
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        border: 1px solid rgb(216 102 120 / 12%);
+        border-radius: 50%;
+        content: "";
+        pointer-events: none;
+      }
+
+      .invitation::before {
+        top: -72px;
+        left: -68px;
+      }
+
+      .invitation::after {
+        right: -72px;
+        bottom: -76px;
+        width: 170px;
+        height: 170px;
+      }
+
+      .stamp {
+        display: grid;
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 23px;
+        place-items: center;
+        border: 1px solid #f1d8d5;
+        border-radius: 50%;
+        background: #fff4f0;
+        color: var(--rose);
+        font-size: 25px;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--rose-dark);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.6rem, 10vw, 3.75rem);
+        font-weight: 400;
+        letter-spacing: -0.055em;
+        line-height: 1.05;
+      }
+
+      .note {
+        max-width: 350px;
+        margin: 21px auto 0;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.75;
+      }
+
+      .question {
+        margin: 30px 0 22px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.4rem;
+        line-height: 1.4;
+      }
+
+      .choices {
+        display: grid;
+        gap: 11px;
+      }
+
+      .choice {
+        display: grid;
+        align-items: center;
+        min-height: 52px;
+        padding: 13px 20px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          transform 160ms ease,
+          background-color 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .choice:hover {
+        transform: translateY(-2px);
+      }
+
+      .choice:focus-visible {
+        outline: 3px solid #d8667870;
+        outline-offset: 3px;
+      }
+
+      .choice-yes {
+        background: var(--rose);
+        box-shadow: 0 8px 18px rgb(216 102 120 / 24%);
+        color: white;
+        font-weight: 700;
+      }
+
+      .choice-yes:hover {
+        background: var(--rose-dark);
+        box-shadow: 0 10px 22px rgb(216 102 120 / 30%);
+      }
+
+      .choice-no {
+        border-color: var(--line);
+        background: transparent;
+        color: var(--muted);
+      }
+
+      .choice-no:hover {
+        background: #fff7f2;
+      }
+
+      .response {
+        margin: 17px 0 0;
+        color: var(--rose-dark);
+        font-size: 0.94rem;
+        line-height: 1.6;
+      }
+
+      .response:empty {
+        display: none;
+      }
+
+      .footer {
+        margin: 27px 0 0;
+        color: #a28e94;
+        font-size: 0.77rem;
+      }
+
+      .heart {
+        position: fixed;
+        z-index: 2;
+        color: var(--rose);
+        font-size: 22px;
+        pointer-events: none;
+        animation: pop 850ms ease-out forwards;
+      }
+
+      .sad-face {
+        position: fixed;
+        z-index: 2;
+        color: var(--muted);
+        font-size: 25px;
+        pointer-events: none;
+        animation: pop 950ms ease-out forwards;
+      }
+
+      @keyframes arrive {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pop {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.35);
+        }
+
+        18% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        100% {
+          opacity: 0;
+          transform: translate(
+              calc(-50% + var(--drift-x)),
+              calc(-50% + var(--drift-y))
+            )
+            scale(0.8) rotate(var(--rotation));
+        }
+      }
+
+      @media (max-width: 480px) {
+        .invitation {
+          padding: 44px 25px 36px;
+          border-radius: 24px;
+        }
+
+        .question {
+          font-size: 1.28rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="invitation">
+      <div class="stamp" aria-hidden="true">♡</div>
+      <p class="eyebrow">A little note for you</p>
+      <h1>Hey, you.</h1>
+      <p class="note">
+        I really appreciate that we seem to share similar values. I’d love to
+        talk in person and get to know you even better.
+      </p>
+      <p class="question">Would you like to go on a date with me?</p>
+      <div class="choices" aria-label="Your answer">
+        <a class="choice choice-yes" href="date.html">
+          Yes, I’d love to
+        </a>
+        <a class="choice choice-no" href="friends.html">
+          I’m sorry, but no
+        </a>
+      </div>
+      <p class="footer">Whatever your answer, thanks for hearing me out.</p>
+    </main>
+    <script>
+      const yesButton = document.querySelector(".choice-yes");
+      const noButton = document.querySelector(".choice-no");
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+
+      yesButton.addEventListener("pointerenter", () => popDecorations(yesButton, "heart"));
+      yesButton.addEventListener("focus", () => popDecorations(yesButton, "heart"));
+      noButton.addEventListener("pointerenter", () => popDecorations(noButton, "sad-face"));
+      noButton.addEventListener("focus", () => popDecorations(noButton, "sad-face"));
+
+      function popDecorations(button, className) {
+        if (reduceMotion.matches) {
+          return;
+        }
+
+        const bounds = button.getBoundingClientRect();
+        const count = className === "heart" ? 6 : 2;
+
+        for (let index = 0; index < count; index += 1) {
+          const decoration = document.createElement("span");
+          decoration.className = className;
+          decoration.setAttribute("aria-hidden", "true");
+          decoration.textContent =
+            className === "heart" ? (index % 2 === 0 ? "♥" : "♡") : "☹";
+          decoration.style.left = `${bounds.left + bounds.width / 2}px`;
+          decoration.style.top = `${bounds.top + bounds.height / 2}px`;
+          decoration.style.setProperty(
+            "--drift-x",
+            `${Math.random() * 110 - 55}px`,
+          );
+          decoration.style.setProperty(
+            "--drift-y",
+            `${Math.random() * -85 - 20}px`,
+          );
+          decoration.style.setProperty(
+            "--rotation",
+            `${Math.random() * 50 - 25}deg`,
+          );
+          decoration.style.animationDelay = `${index * 45}ms`;
+          document.body.append(decoration);
+          decoration.addEventListener("animationend", () => decoration.remove());
+        }
+      }
+    </script>
+  </body>
+</html>
